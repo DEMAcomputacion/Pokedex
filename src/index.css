@@ -1,0 +1,72 @@
+.grid-item {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .grid-item:hover {
+    transform: scale(1.04);
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: 19% 19% 19% 19% 19%;
+    grid-auto-rows: auto;
+    gap: 1%;
+    padding: 0px;
+  }
+
+  .imagen {
+    width: 96px;
+    height: 96px;
+  }
+
+  .numero-pokemon-listado {
+    background-color: chocolate;
+    color: white;
+    margin: 0px;
+    border-radius: 3px;
+    padding: 2px;
+    font-size: 0.7rem;
+  }
+  
+  .nombre-pokemon-listado {
+    border-radius: 3px;
+    font-size: 0.75rem;
+    margin: 0px;
+  }
+
+  .imagen-grande {
+    width: 80%;
+    margin:auto;
+  }
+
+  body {
+    background-color: #EF5350;
+  }
+
+  .card-body {
+    background-color: #cfcfcf;
+  }
+
+  #panelCentral {
+    position: relative;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    align-items: center;
+ }
+
+ #piePanelLateral {
+    padding-top: 5%;
+ }
+
+ #piePanelLateral > a {
+    background-color: #ddd;
+    border: none;
+    color: black;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 3px;
+ }
