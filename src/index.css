@@ -2,6 +2,12 @@
     transition: transform 0.3s ease-in-out;
   }
 
+  .card {
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+    border: 1px solid rgb(151, 149, 149);
+}
   .grid-item:hover {
     transform: scale(1.04);
   }
@@ -20,7 +26,7 @@
   }
 
   .numero-pokemon-listado {
-    background-color: chocolate;
+    background-color: #5C5A5B;
     color: white;
     margin: 0px;
     border-radius: 3px;
@@ -40,11 +46,11 @@
   }
 
   body {
-    background-color: #EF5350;
+    background-color: whitesmoke;
   }
 
   .card-body {
-    background-color: #cfcfcf;
+    background-color: #ECC2C1;
   }
 
   #panelCentral {
@@ -58,9 +64,9 @@
     padding-top: 5%;
  }
 
- #piePanelLateral > a {
-    background-color: #ddd;
-    border: none;
+.botones-paginas {
+    background-color: #fFe3e0;
+    border: 1px solid #ccc;
     color: black;
     padding: 5px 10px;
     text-align: center;
@@ -68,5 +74,18 @@
     display: inline-block;
     margin: 4px 2px;
     cursor: pointer;
+    border-radius: 3px;
+ }
+
+ .pagina-activa {
+    background-color: whitesmoke;
+    border: 1px solid black;
+    color: rgb(37, 37, 37);
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration:none;
+    display: inline-block;
+    margin: 4px 2px;
+    pointer-events: none;
     border-radius: 3px;
  }

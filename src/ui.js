@@ -1,15 +1,22 @@
 export const fichas = document.querySelectorAll('.grid-item');
 import * as llamadas from "./llamadas.js";
+import {actualizaListado} from "./index.js";
 
-export function muestraListadoPokemones(listado) {
+export function muestraListadoPokemones(listado, nroPagina = 0) {
+    
+    const multiplicadorDePagina = nroPagina * 20;
+    //Borra toda la grilla
+    document.querySelectorAll(".grid-item").forEach(x => x.innerHTML='');
+    
+    //Crea la grilla (foto, nombre y numero)
     fichas.forEach((elem,index) => {
-
         const $divContenedorTarjeta = document.createElement('div');
-        $divContenedorTarjeta.className = 'card align-items-center text-center'
+        $divContenedorTarjeta.className = 'card align-items-center text-center';
+        $divContenedorTarjeta.onclick = function() {muestraPokemon(index+1+multiplicadorDePagina)};
 
         const $fotoPokemon = document.createElement('img');
         $fotoPokemon.className = 'card-img-top imagen';
-        llamadas.cargaFotoPokemon(index);
+        llamadas.cargaFotoPokemon(index, multiplicadorDePagina);
         $divContenedorTarjeta.appendChild($fotoPokemon);
 
         const $divContenedorDatosTarjeta = document.createElement('div');
@@ -22,7 +29,7 @@ export function muestraListadoPokemones(listado) {
 
         const $nroPokemon = document.createElement("h6");
         $nroPokemon.className = 'numero-pokemon-listado'
-        $nroPokemon.innerText = 'Nro: ' + (index + 1).toString().padStart(4, 0);
+        $nroPokemon.innerText = 'Nro: ' + (index + 1 + multiplicadorDePagina).toString().padStart(4, 0);
         $divContenedorDatosTarjeta.appendChild($nroPokemon)
         
         $divContenedorTarjeta.appendChild($divContenedorDatosTarjeta)
@@ -30,29 +37,33 @@ export function muestraListadoPokemones(listado) {
     })
 }
 
-export async function mustraPaginasDisponibles(listado) {
+export async function mustraPaginasDisponibles(listado, nroPagina = 0) {
+    
     const paginas = [];
-    for(let i = 1; i <= listado.count; i += 20){
-        paginas.push({'desde': i, 'hasta': i + 19})
+    const offset = 20
+
+    for(let i = 0; i <= listado.count; i += offset){
+        paginas.push({'desde': i, 'offset': offset})
     }
-    const $piePanelLateral = document.querySelector("#piePanelLateral");
-    paginas.map((elem,index) => {
+    
+    //Borra los botones existentes
+    const $piePanelLateral = document.querySelector("#piePanelLateral")
+    $piePanelLateral.innerHTML = ''
+
+    //Crea los botones con los nros de pagina
+    paginas.map((elem, index) => {
         const separador = document.createElement("span")
         separador.innerText = " "
         const anchor = document.createElement("a");
-
+        index === nroPagina ? anchor.className = 'pagina-activa' : anchor.className = 'botones-paginas';
+        anchor.onclick = function() {actualizaListado(index, paginas[index])};
         anchor.innerText = index
         $piePanelLateral.appendChild(anchor);
         $piePanelLateral.appendChild(separador);
-
     })
 }
 
-function hola(){
-    console.log("hola")
-}
-
-export async function muestraPokemon(nroPokemon = 2) {
+export async function muestraPokemon(nroPokemon = 1) {
     
     const elPokemon = await llamadas.cargaPokemon(nroPokemon);
     
@@ -69,6 +80,4 @@ export async function muestraPokemon(nroPokemon = 2) {
     let tipos = " ";
     elPokemon.types.forEach(tipo => tipos += (" " + tipo.type["name"]).toUpperCase())
     $tipo.innerText = `Tipo: ${tipos}`
-
-    console.log(elPokemon)
 }
