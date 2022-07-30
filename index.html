@@ -54,18 +54,30 @@
             </div>
             <div class="row">
                 <div class="col-md-2"></div>
-                <div class="col-md-8  align-items-center" id="cuerpoPanelCentral">
-                    <div class="card ">
-                        <img src="#" alt="" class="imagen-grande" id="fotoGrandePokemon">
-                        <div class="card-body">
+                <div class="col-md-8" id="cuerpoPanelCentral">
+                    <div class="card" id="tarjetaGrande">
+                            <img src="#" alt="" class="img-fluid" id="fotoGrandePokemon">
+                    </div>
+                    <div class="cardBody">
                             <h4 class="card-title" id="nombrePokemonPanelCentral"></h4>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item" id="cardPeso"> </li>
                                 <li class="list-group-item" id="cardAltura"> </li>
                                 <li class="list-group-item" id="cardTipo"> </li>
-                              </ul>
-                        </div>
+                            </ul>
                     </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 text-center" id="piePanelCentral" style="padding-top: 3rem;">
+                    <form class="inline-form">
+                        <div class="input-group mb-3" id="formularioDeBusqueda">
+                            <input type="text" id="nombreONumeroPokemon" class="form-control" placeholder="Encuentra por numero o nómbre">
+                            <button class="btn btn-outline-secondary" for="nombreONumeroPokemon" type="button" id="buttonBuscar">Buscar Pokemon</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="col-md-2"></div>
             </div>

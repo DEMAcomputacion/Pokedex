@@ -1,5 +1,14 @@
+:root {
+  --color-fondo: #DDDDDD;
+  --color-cuerpo-tarjeta: #EFBF25;
+  --color-nro-pokemon: #f20000;
+  --color-txt-nro-pokemon: white;
+}
+
 .grid-item {
     transition: transform 0.3s ease-in-out;
+    margin: 0px;
+    padding: 0px;
   }
 
   .card {
@@ -18,6 +27,7 @@
     grid-auto-rows: auto;
     gap: 1%;
     padding: 0px;
+    margin:0px;
   }
 
   .imagen {
@@ -26,8 +36,8 @@
   }
 
   .numero-pokemon-listado {
-    background-color: #5C5A5B;
-    color: white;
+    background-color: var(--color-nro-pokemon);
+    color: var(--color-txt-nro-pokemon);
     margin: 0px;
     border-radius: 3px;
     padding: 2px;
@@ -46,19 +56,38 @@
   }
 
   body {
-    background-color: whitesmoke;
+    background-color: var(--color-fondo);
   }
 
   .card-body {
-    background-color: #ECC2C1;
+    background-color: var(--color-cuerpo-tarjeta);
+    position: static;
+    border: 1px solid rgb(151, 149, 149);
   }
-
+  
+  .cardBody {
+    background-color: var(--color-cuerpo-tarjeta);
+    position: static;
+    border: 1px solid rgb(29, 28, 28);
+    width: 26rem;
+  }
   #panelCentral {
-    position: relative;
-    padding-top: 5%;
-    padding-bottom: 5%;
+    position: static;
     align-items: center;
  }
+
+#fotoGrandePokemon {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#tarjetaGrande {
+  width: 26rem;
+  height: 25rem;
+  align-items: stretch;
+  background: rgb(226,228,189);
+  background: radial-gradient(circle, rgba(226,228,189,1) 0%, rgba(240,190,33,1) 100%);
+}
 
  #piePanelLateral {
     padding-top: 5%;

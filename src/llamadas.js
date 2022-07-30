@@ -13,5 +13,4 @@ export function cargaFotoPokemon(idGrilla, multiplicadorDePagina){
     fetch(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${nroPokemon}.png`)
         .then(rta => rta.blob())
         .then(rta => document.querySelectorAll(".imagen")[idGrilla].setAttribute('src', URL.createObjectURL(rta)));
-
 }
