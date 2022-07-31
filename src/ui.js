@@ -1,22 +1,31 @@
 export const fichas = document.querySelectorAll('.grid-item');
 import * as llamadas from "./llamadas.js";
 import {actualizaListado} from "./index.js";
+const OFFSET = 20;
 
 //Intrucciones buscador de pokemon
 const $formBuscar = document.querySelector("#buttonBuscar");
 const $valorBuscar = document.querySelector("#nombreONumeroPokemon");
 $formBuscar.onclick = buscarPokemon;
 
-function buscarPokemon(){
+async function buscarPokemon(){
     const valorABuscar = $valorBuscar.value.toLowerCase()
-    if(/[A-Za-z0-9]/.test(valorABuscar)){
-        muestraPokemon(valorABuscar);
+    const $mensajeError = document.querySelector("#mensajeError")
+    $mensajeError.innerText = "";
+
+    if(/^[0-9a-zA-Z]+$/g.test(valorABuscar)){
+        const llamadaPoke = await muestraPokemon(valorABuscar);
+          if(llamadaPoke === false){
+            $mensajeError.innerText = "No pudimos encontrar ese Pokemon"
+        }
+    }else{
+        $mensajeError.innerText = "Solo se aceptan letras o numeros"
     };
 }
 
 export function muestraListadoPokemones(listado, nroPagina = 0) {
     
-    const multiplicadorDePagina = nroPagina * 20;
+    const multiplicadorDePagina = nroPagina * OFFSET;
     //Borra toda la grilla
     document.querySelectorAll(".grid-item").forEach(x => x.innerHTML='');
     
@@ -49,15 +58,19 @@ export function muestraListadoPokemones(listado, nroPagina = 0) {
     })
 }
 
+function armaListadoOffsets(listado) {
+    const paginas = [];
+
+    for(let i = 0; i <= listado.count; i += OFFSET){
+        paginas.push({'desde': i, 'offset': OFFSET})
+    }
+    return paginas;
+}
+
 export async function mustraPaginasDisponibles(listado, nroPagina = 0) {
     
-    const paginas = [];
-    const offset = 20
-
-    for(let i = 0; i <= listado.count; i += offset){
-        paginas.push({'desde': i, 'offset': offset})
-    }
-    
+    const paginas = armaListadoOffsets(listado)
+    console.log(paginas)
     //Borra los botones existentes
     const $piePanelLateral = document.querySelector("#piePanelLateral")
     $piePanelLateral.innerHTML = ''
@@ -68,7 +81,7 @@ export async function mustraPaginasDisponibles(listado, nroPagina = 0) {
         separador.innerText = " "
         const anchor = document.createElement("a");
         index === nroPagina ? anchor.className = 'pagina-activa' : anchor.className = 'botones-paginas';
-        anchor.onclick = function() {actualizaListado(index, paginas[index])};
+        anchor.onclick = function() {actualizaListado(index, paginas[index].desde)};
         anchor.innerText = index
         $piePanelLateral.appendChild(anchor);
         $piePanelLateral.appendChild(separador);
@@ -77,19 +90,42 @@ export async function mustraPaginasDisponibles(listado, nroPagina = 0) {
 
 export async function muestraPokemon(nroPokemon = 1) {
 
-    const elPokemon = await llamadas.cargaPokemon(nroPokemon);
-    console.log(elPokemon)
-    const $fotoGrandePokemon = document.querySelector("#fotoGrandePokemon");
-    const $peso = document.querySelector("#cardPeso")
-    const $altura = document.querySelector("#cardAltura")
-    const $tipo = document.querySelector("#cardTipo")
-    const $nombre = document.querySelector("#nombrePokemonPanelCentral")
+    try {
+        const elPokemon = await llamadas.cargaPokemon(nroPokemon);
 
-    $fotoGrandePokemon.src = elPokemon.sprites.other.dream_world.front_default
-    $nombre.innerText = elPokemon["name"].toUpperCase();
-    $peso.innerText = `Peso: ${elPokemon.weight /10 }Kg`;
-    $altura.innerText = `Altura: ${elPokemon.height / 10} metros`;
-    let tipos = " ";
-    elPokemon.types.forEach(tipo => tipos += (" " + tipo.type["name"]).toUpperCase())
-    $tipo.innerText = `Tipo: ${tipos}`
+        const $fotoGrandePokemon = document.querySelector("#fotoGrandePokemon");
+        const $peso = document.querySelector("#cardPeso")
+        const $altura = document.querySelector("#cardAltura")
+        const $tipo = document.querySelector("#cardTipo")
+        const $nombre = document.querySelector("#nombrePokemonPanelCentral")
+
+        $fotoGrandePokemon.src = elPokemon.sprites.other.dream_world.front_default
+        $nombre.innerText = elPokemon["name"].toUpperCase() + "   " + "°" + elPokemon.id;
+        $peso.innerText = `Peso: ${elPokemon.weight /10 }Kg`;
+        $altura.innerText = `Altura: ${elPokemon.height / 10} metros`;
+        let tipos = " ";
+        elPokemon.types.forEach(tipo => tipos += (" " + tipo.type["name"]).toUpperCase())
+        $tipo.innerText = `Tipo: ${tipos}`;
+    }catch{
+        return false;
+    }
+}
+
+export function cargaFuncionesBotonesPaginas(listado, nroPagina) {
+    const $botonAnterior = document.querySelector("#botonAnterior");
+    const $botonSiguiente = document.querySelector("#botonSiguiente");
+    const listadoOffsets = armaListadoOffsets(listado);
+
+    nroPagina === 0 ? $botonAnterior.disabled = true : $botonAnterior.disabled = false;
+
+    $botonAnterior.onclick = function() {
+        if(nroPagina != 0){
+            actualizaListado(nroPagina - 1, listadoOffsets[nroPagina].desde - OFFSET)
+        }
+    };
+    
+    $botonSiguiente.onclick = function() {
+            actualizaListado(nroPagina + 1,  listadoOffsets[nroPagina].desde + OFFSET)
+    }
+
 }
