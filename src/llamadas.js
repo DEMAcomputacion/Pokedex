@@ -14,6 +14,12 @@ export async function cargaPokemon(id){
 export function cargaFotoPokemon(idGrilla, multiplicadorDePagina){
     const nroPokemon = idGrilla + 1 + multiplicadorDePagina
     fetch(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${nroPokemon}.png`)
-        .then(rta => rta.blob())
-        .then(rta => document.querySelectorAll(".imagen")[idGrilla].setAttribute('src', URL.createObjectURL(rta)));
+        .then(rta => {
+            if (rta.status === 404) {
+                document.querySelectorAll(".imagen")[idGrilla].setAttribute('src', './img/pokebola-no-foto.png')
+            }else{
+            return rta.blob()}
+        })
+        .then(rta => document.querySelectorAll(".imagen")[idGrilla].setAttribute('src', URL.createObjectURL(rta))
+);
 }

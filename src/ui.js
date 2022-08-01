@@ -36,8 +36,9 @@ export function muestraListadoPokemones(listado, nroPagina = 0) {
         $divContenedorTarjeta.onclick = function() {muestraPokemon(index+1+multiplicadorDePagina)};
 
         const $fotoPokemon = document.createElement('img');
-        $fotoPokemon.className = 'card-img-top imagen';
+        $fotoPokemon.src = "./img/cargando.gif"
         llamadas.cargaFotoPokemon(index, multiplicadorDePagina);
+        $fotoPokemon.className = 'card-img-top imagen';
         $divContenedorTarjeta.appendChild($fotoPokemon);
 
         const $divContenedorDatosTarjeta = document.createElement('div');
@@ -99,7 +100,9 @@ export async function muestraPokemon(nroPokemon = 1) {
         const $tipo = document.querySelector("#cardTipo")
         const $nombre = document.querySelector("#nombrePokemonPanelCentral")
 
-        $fotoGrandePokemon.src = elPokemon.sprites.other.dream_world.front_default
+        $fotoGrandePokemon.src = './img/cargando.gif'
+        $fotoGrandePokemon.src = await elPokemon.sprites.other.dream_world.front_default
+        $fotoGrandePokemon.className = 'img-fluid d-block my-auto py-auto p-3'
         $nombre.innerText = elPokemon["name"].toUpperCase() + "   " + "°" + elPokemon.id;
         $peso.innerText = `Peso: ${elPokemon.weight /10 }Kg`;
         $altura.innerText = `Altura: ${elPokemon.height / 10} metros`;
@@ -117,7 +120,8 @@ export function cargaFuncionesBotonesPaginas(listado, nroPagina) {
     const listadoOffsets = armaListadoOffsets(listado);
 
     nroPagina === 0 ? $botonAnterior.disabled = true : $botonAnterior.disabled = false;
-
+    nroPagina === (listadoOffsets.length -1) ? $botonSiguiente.disabled = true : $botonSiguiente.disabled = false;
+console.log(listadoOffsets.length -1)
     $botonAnterior.onclick = function() {
         if(nroPagina != 0){
             actualizaListado(nroPagina - 1, listadoOffsets[nroPagina].desde - OFFSET)
