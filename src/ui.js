@@ -101,7 +101,13 @@ export async function muestraPokemon(nroPokemon = 1) {
         const $nombre = document.querySelector("#nombrePokemonPanelCentral")
 
         $fotoGrandePokemon.src = './img/cargando.gif'
-        $fotoGrandePokemon.src = await elPokemon.sprites.other.dream_world.front_default
+
+        if(elPokemon.sprites.other.dream_world.front_default != null){
+            $fotoGrandePokemon.src = await elPokemon.sprites.other.dream_world.front_default
+        }else{
+            $fotoGrandePokemon.src = './img/pokebola-no-foto.png'
+        }
+        
         $fotoGrandePokemon.className = 'img-fluid d-block my-auto py-auto p-3'
         $nombre.innerText = elPokemon["name"].toUpperCase() + "   " + "°" + elPokemon.id;
         $peso.innerText = `Peso: ${elPokemon.weight /10 }Kg`;
