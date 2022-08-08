@@ -71,7 +71,6 @@ function armaListadoOffsets(listado) {
 export async function mustraPaginasDisponibles(listado, nroPagina = 0) {
     
     const paginas = armaListadoOffsets(listado)
-    console.log(paginas)
     //Borra los botones existentes
     const $piePanelLateral = document.querySelector("#piePanelLateral")
     $piePanelLateral.innerHTML = ''
@@ -81,6 +80,7 @@ export async function mustraPaginasDisponibles(listado, nroPagina = 0) {
         const separador = document.createElement("span")
         separador.innerText = " "
         const anchor = document.createElement("a");
+        anchor.id = `anchor${index}`;
         index === nroPagina ? anchor.className = 'pagina-activa' : anchor.className = 'botones-paginas';
         anchor.onclick = function() {actualizaListado(index, paginas[index].desde)};
         anchor.innerText = index
@@ -127,7 +127,7 @@ export function cargaFuncionesBotonesPaginas(listado, nroPagina) {
 
     nroPagina === 0 ? $botonAnterior.disabled = true : $botonAnterior.disabled = false;
     nroPagina === (listadoOffsets.length -1) ? $botonSiguiente.disabled = true : $botonSiguiente.disabled = false;
-console.log(listadoOffsets.length -1)
+
     $botonAnterior.onclick = function() {
         if(nroPagina != 0){
             actualizaListado(nroPagina - 1, listadoOffsets[nroPagina].desde - OFFSET)

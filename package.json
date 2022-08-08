@@ -5,6 +5,9 @@
   "name": "pokedex",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "cypress": "cypress open"
+  },
   "dependencies": {
     "aggregate-error": "^3.1.0",
     "ansi-colors": "^4.1.3",

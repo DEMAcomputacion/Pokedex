@@ -27,5 +27,4 @@ export async function actualizaListado(nroPagina, desde) {
     ui.cargaFuncionesBotonesPaginas(listadoDePokemones, nroPagina)
 }
 
-
 inicializa();
