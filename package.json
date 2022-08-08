@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+<<<<<<< Updated upstream
     "cypress": "^10.4.0"
   },
   "name": "pokedex",
@@ -174,4 +175,11 @@
   },
   "homepage": "https://github.com/DEMAcomputacion/Pokedex#readme",
   "description": ""
+=======
+    "cypress": "^10.3.1"
+  },
+  "scripts": {
+    "cypress-dev": "cypress open"
+  }
+>>>>>>> Stashed changes
 }
