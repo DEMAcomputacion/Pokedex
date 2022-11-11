@@ -1,30 +1,31 @@
-import * as ui from './ui.js';
-import * as llamadas from './llamadas.js';
+import * as ui from './ui/ui.js';
+import * as api from './api/api.js';
+import * as paginador from './ui/paginador.js';
 
 //previene que se recargue la pagina al presionar enter
 document.querySelector("#nombreONumeroPokemon")
-    .addEventListener("keydown", (evento) => {
-        if (evento.key == "Enter") {
-            evento.preventDefault();
+    .addEventListener("keydown", (event) => {
+        if (event.key == "Enter") {
+            event.preventDefault();
             return false;
             }
         }
     );
 
-async function inicializa() {
-    const listadoDePokemones = await llamadas.llamaListadoPokemones(0)
+async function inicializar() {
+    const listadoDePokemones = await api.llamaListadoPokemones(0)
     ui.muestraListadoPokemones(listadoDePokemones);
-    ui.mustraPaginasDisponibles(listadoDePokemones);
     ui.muestraPokemon();
-    ui.cargaFuncionesBotonesPaginas(listadoDePokemones, 0)
+    paginador.mustraPaginasDisponibles(listadoDePokemones);
+    paginador.cargaFuncionesBotonesPaginas(listadoDePokemones, 0)
 }
 
 export async function actualizaListado(nroPagina, desde) {
-    const listadoDePokemones = await llamadas.llamaListadoPokemones(desde, 20)
+    const listadoDePokemones = await api.llamaListadoPokemones(desde, 20)
     ui.muestraListadoPokemones(listadoDePokemones, nroPagina);
-    ui.mustraPaginasDisponibles(listadoDePokemones, nroPagina);
     ui.muestraPokemon(desde + 1);
-    ui.cargaFuncionesBotonesPaginas(listadoDePokemones, nroPagina)
+    paginador.mustraPaginasDisponibles(listadoDePokemones, nroPagina);
+    paginador.cargaFuncionesBotonesPaginas(listadoDePokemones, nroPagina)
 }
 
-inicializa();
+inicializar();
