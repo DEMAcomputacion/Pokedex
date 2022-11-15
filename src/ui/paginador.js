@@ -1,7 +1,7 @@
-import {actualizaListado} from "../index.js";
+import {actualizarListado} from "../index.js";
 export const OFFSET = 20;
 
-function armaListadoOffsets(listado) {
+function armarListadoOffsets(listado) {
     const paginas = [];
 
     for(let i = 0; i <= listado.count; i += OFFSET){
@@ -10,30 +10,30 @@ function armaListadoOffsets(listado) {
     return paginas;
 }
 
-export function cargaFuncionesBotonesPaginas(listado, nroPagina) {
+export function cargarBotonesAnteriorSiguiente(listado, nroPagina) {
     const $botonAnterior = document.querySelector("#botonAnterior");
     const $botonSiguiente = document.querySelector("#botonSiguiente");
-    const listadoOffsets = armaListadoOffsets(listado);
+    const listadoOffsets = armarListadoOffsets(listado);
     
     nroPagina === 0 ? $botonAnterior.disabled = true : $botonAnterior.disabled = false;
     nroPagina === (listadoOffsets.length +1) ? $botonSiguiente.disabled = true : $botonSiguiente.disabled = false;
 
     $botonAnterior.onclick = function() {
         if(nroPagina !== 0){
-            actualizaListado(nroPagina - 1, listadoOffsets[nroPagina].desde - OFFSET)
+            actualizarListado(nroPagina - 1, listadoOffsets[nroPagina].desde - OFFSET)
         }
     };
     
     $botonSiguiente.onclick = function() {
         if(nroPagina !== (listadoOffsets.length -1)){
-            actualizaListado(nroPagina + 1,  listadoOffsets[nroPagina].desde + OFFSET)
+            actualizarListado(nroPagina + 1,  listadoOffsets[nroPagina].desde + OFFSET)
         }
     }
 }
 
-export function mustraPaginasDisponibles(listado, nroPagina = 0) {
+export function mostrarPaginador(listado, nroPagina = 0) {
     
-    const paginas = armaListadoOffsets(listado)
+    const paginas = armarListadoOffsets(listado)
     //Borra los botones existentes
     const $piePanelLateral = document.querySelector("#piePanelLateral")
     $piePanelLateral.innerHTML = ''
@@ -44,7 +44,7 @@ export function mustraPaginasDisponibles(listado, nroPagina = 0) {
         const anchor = document.createElement("a");
         anchor.id = `anchor${index}`;
         index === nroPagina ? anchor.className = 'pagina-activa' : anchor.className = 'botones-paginas';
-        anchor.onclick = () => {actualizaListado(index, paginas[index].desde)};
+        anchor.onclick = () => {actualizarListado(index, paginas[index].desde)};
         anchor.innerText = index
         $piePanelLateral.appendChild(anchor);
         $piePanelLateral.appendChild(separador);

@@ -1,4 +1,4 @@
-export default `{
+export const pokemon = {
     "id": 1,
     "nombre": "bulbasaur",
     "foto1": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg",
@@ -47,4 +47,4 @@ export default `{
         }
       }
     ]
-  }`
+  }

@@ -1,4 +1,4 @@
-import { muestraPokemon } from "./ui.js";
+import { mostrarUnPokemon } from "./ui.js";
 
 export async function buscarPokemon() {
   const $valorBuscar = document.querySelector("#nombreONumeroPokemon");
@@ -7,7 +7,7 @@ export async function buscarPokemon() {
   $mensajeError.innerText = "";
 
   if (/^[0-9a-zA-Z]+$/g.test(valorABuscar)) {
-    const llamadaPoke = await muestraPokemon(valorABuscar);
+    const llamadaPoke = await mostrarUnPokemon(valorABuscar);
     if (llamadaPoke === false) {
       $mensajeError.innerText = "No pudimos encontrar ese Pokemon";
     }
