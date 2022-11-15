@@ -2,7 +2,7 @@
 /// <reference types="Jest"/>
 
 import Pokemon from "../Pokemon.js";
-import pokemon from "./fixtures/pokemon";
+import {pokemon} from "./fixtures/pokemon.js";
 
 describe("Clase Pokemon", () => {
   test("Prueba la creacion de propiedades de la clase Pokemon", () => {
